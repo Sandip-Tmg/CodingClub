@@ -2,6 +2,7 @@ package com.project.CodingClub.handlers;
 
 import com.project.CodingClub.entities.Card;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public class Validator {
@@ -10,7 +11,20 @@ public class Validator {
         card.setCardNumber(cardNumberValidator(cardNumber));
         card.setCvc(cvcValidator(cvc));
         card.setNameOnCard(nameOnCardValidator(nameOnCard));
+        card.setFailureReason(failureReason(card));
         return card;
+    }
+
+    private static String failureReason(Card card) {
+        if (card.getCardNumber() == null) {
+            return "Invalid card number";
+        } else if (card.getCvc() == null) {
+            return "Invalid cvc";
+        } else if (card.getNameOnCard() == null) {
+            return "Invalid name on card";
+        } else {
+            return "";
+        }
     }
 
     private static String nameOnCardValidator(Object nameOnCard) {
@@ -40,8 +54,4 @@ public class Validator {
     public static boolean validate(Card card) {
         return card.getCardNumber() != null && card.getCvc() != null && card.getNameOnCard() != null;
     }
-
-
-
-
 }

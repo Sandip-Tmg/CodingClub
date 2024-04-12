@@ -15,4 +15,5 @@ public class Card {
     private Integer cvc;
     private String nameOnCard;
     private Float balance;
+    private String failureReason;
 }

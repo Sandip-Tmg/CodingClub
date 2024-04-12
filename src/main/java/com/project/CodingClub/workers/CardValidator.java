@@ -7,6 +7,8 @@ import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 
 @Component
 public class CardValidator {
@@ -22,7 +24,10 @@ public class CardValidator {
                 job.getVariable("balance"));
 
         jobClient.newCompleteCommand(job).
-                variable("valid", Validator.validate(card)).
+                variables(Map.of(
+                        "valid",Validator.validate(card),
+                        "failureReason",card.getFailureReason()
+                )).
                 send().
                 join();
     }
